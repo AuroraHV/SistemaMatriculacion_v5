@@ -35,41 +35,38 @@ public class ControladorVentanaAsignatura {
     @FXML
     private void initialize() {
         try {
-            // Obtener lista de ciclos
             List<CicloFormativo> listaCiclos = VistaGrafica.getInstancia().getControlador().getCiclosFormativos();
             ciclosDisponibles.setAll(listaCiclos);
 
-            // Filtrado por código en el buscador
             ciclosFiltrados = new FilteredList<>(ciclosDisponibles, p -> true);
             lvCiclos.setItems(ciclosFiltrados);
 
-            // Listener del TextField de búsqueda
             tfBuscarCiclo.textProperty().addListener((obs, oldVal, newVal) -> {
                 ciclosFiltrados.setPredicate(ciclo -> {
                     if (newVal == null || newVal.isBlank()) return true;
                     String texto = newVal.toLowerCase();
                     return ciclo.getNombre().toLowerCase().contains(texto)
-                            || String.valueOf(ciclo.getCodigo()).contains(texto);
+                            || String.valueOf(ciclo.getCodigo()).startsWith(texto);
                 });
             });
 
-            // Selección única
             lvCiclos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         } catch (Exception e) {
             Dialogos.mostrarDialogoError("Error", "No se pudieron cargar los ciclos.");
         }
 
-        // Cargar curso y especialidad
         cbCurso.setItems(FXCollections.observableArrayList("Primero", "Segundo"));
         cbEspecialidad.setItems(FXCollections.observableArrayList("Informática", "Sistemas", "FOL"));
+
+        btnAceptar.setDefaultButton(true);
+        btnCancelar.setCancelButton(true);
     }
 
 
     @FXML
     private void anadirAsignatura(ActionEvent event) {
         try {
-            // Validación de campos obligatorios
             if (tfCodigo.getText().isBlank() || tfNombre.getText().isBlank() || tfHoras.getText().isBlank()
                     || tfDesdoble.getText().isBlank() || cbCurso.getValue() == null
                     || cbEspecialidad.getValue() == null || lvCiclos.getSelectionModel().getSelectedItem() == null) {

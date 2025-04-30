@@ -33,12 +33,14 @@ public class ControladorVentanaCiclo {
     public void initialize() {
         cbTipoGrado.setItems(tiposGrado);
         cbTipoGrado.setOnAction(e -> actualizarCamposGrado());
-        // ⚠️ Cargamos correctamente los enums como items del ComboBox
         cbModalidad.setItems(FXCollections.observableArrayList(Modalidad.values()));
-        cbModalidad.setPromptText("Seleccionar"); // Texto por defecto
-        cbModalidad.getSelectionModel().clearSelection(); // Aseguramos que no haya valor seleccionado al principio
+        cbModalidad.setPromptText("Seleccionar");
+        cbModalidad.getSelectionModel().clearSelection();
 
         Platform.runLater(() -> tfCodigo.requestFocus());
+
+        btnAnadir.setDefaultButton(true);
+        btnCancelar.setCancelButton(true);
     }
 
     private void actualizarCamposGrado() {
@@ -70,7 +72,6 @@ public class ControladorVentanaCiclo {
     @FXML
     public void anadirCiclo(ActionEvent event) {
         try {
-            // Validar primero que ningún campo obligatorio esté vacío
             if (tfCodigo.getText().isBlank() || tfNombreCiclo.getText().isBlank() ||
                     tfFamilia.getText().isBlank() || tfHoras.getText().isBlank() ||
                     cbTipoGrado.getValue() == null || tfNombreGrado.getText().isBlank() ||

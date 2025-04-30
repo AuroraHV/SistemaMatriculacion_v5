@@ -44,6 +44,8 @@ public class ControladorVentanaAlumno {
     @FXML
     public void initialize() {
         inicializarCampos();
+        btnAnadir.setDefaultButton(true);
+        btnCancelar.setCancelButton(true);
     }
 
     private void inicializarCampos() {

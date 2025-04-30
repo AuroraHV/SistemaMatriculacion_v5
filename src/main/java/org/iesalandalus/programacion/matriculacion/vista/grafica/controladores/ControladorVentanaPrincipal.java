@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -35,10 +37,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static javafx.scene.input.KeyCode.ESCAPE;
+
 public class ControladorVentanaPrincipal {
 
     // INICIO y BARRA MENÚ
 
+    @FXML private Button btnEntrar;
     @FXML private TabPane tpSistema;
     @FXML private Tab tbAlumnos;
     @FXML private Tab tbAsignaturas;
@@ -150,6 +155,9 @@ public class ControladorVentanaPrincipal {
 
     @FXML
     public void initialize() {
+
+        //INICIO
+        btnEntrar.setDefaultButton(true);
 
         //ALUMNOS
 
@@ -379,6 +387,7 @@ public class ControladorVentanaPrincipal {
     void salir(ActionEvent event) {
         boolean confirmar = Dialogos.mostrarDialogoConfirmacion("Salir", "¿Realmente quieres salir de la aplicación?");
         if (confirmar) Platform.exit();
+        btnEntrar.setDefaultButton(true);
     }
 
     @FXML
@@ -433,7 +442,6 @@ public class ControladorVentanaPrincipal {
             e.printStackTrace();
         }
     }
-
 
     // INICIO
 

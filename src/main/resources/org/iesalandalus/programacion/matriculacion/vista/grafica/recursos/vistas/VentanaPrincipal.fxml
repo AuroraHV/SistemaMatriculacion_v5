@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.matriculacion.vista.grafica.controladores.ControladorVentanaPrincipal">
+<BorderPane fx:id="bpAplicacion" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.matriculacion.vista.grafica.controladores.ControladorVentanaPrincipal">
     <stylesheets>
         <URL value="@../estilos/estilo_boton.css" />
     </stylesheets>
@@ -34,7 +34,7 @@
                <MenuItem onAction="#irCiclos" text="Ciclos Formativos" />
                <MenuItem onAction="#irAsignaturas" text="Asignaturas" />
                <MenuItem onAction="#irMatriculas" text="Matrículas" />
-               <MenuItem onAction="#salir" text="Cerrar" />
+               <MenuItem fx:id="miSalir" onAction="#salir" text="Cerrar" />
                 </Menu>
                 <Menu text="Operaciones">
                     <MenuItem onAction="#anadirElemento" text="Añadir" />

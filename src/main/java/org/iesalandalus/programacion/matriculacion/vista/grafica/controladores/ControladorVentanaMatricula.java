@@ -96,6 +96,9 @@ public class ControladorVentanaMatricula {
         } catch (Exception e) {
             Dialogos.mostrarDialogoError("Error", "No se pudieron cargar las asignaturas.");
         }
+
+        btnAceptar.setDefaultButton(true);
+        btnCancelar.setCancelButton(true);
     }
 
     @FXML
