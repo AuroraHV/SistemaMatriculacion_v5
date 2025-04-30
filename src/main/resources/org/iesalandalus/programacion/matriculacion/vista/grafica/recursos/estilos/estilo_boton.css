@@ -1,0 +1,34 @@
+.boton-entrar {
+	-fx-background-color: #0077B6;
+	-fx-text-fill: white;
+	-fx-font-size: 25px;
+	-fx-font-weight: bold;
+	-fx-background-radius: 8px;
+	-fx-cursor: hand;
+	-fx-padding: 12px 24px;
+}
+
+.boton-entrar:hover {
+	-fx-background-color: #339dd9;
+	-fx-cursor: hand;
+}
+
+.boton-salir {
+	-fx-background-color: transparent;
+	-fx-padding: 0;
+}
+
+.boton-salir:hover {
+	-fx-background-color: #d3d3d3; /* Un gris muy suave */
+	-fx-background-radius: 5;
+	-fx-cursor: hand;
+}
+
+.botones {
+}
+
+.botones:hover {
+	-fx-cursor: hand;
+}
+
+

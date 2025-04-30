@@ -5,6 +5,8 @@ import org.iesalandalus.programacion.matriculacion.modelo.negocio.IMatriculas;
 import org.iesalandalus.programacion.matriculacion.modelo.negocio.mysql.utilidades.MySQL;
 
 import javax.naming.OperationNotSupportedException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -59,48 +61,59 @@ public class Matriculas implements IMatriculas {
      * @throws OperationNotSupportedException Si no se puede copiar la colección.
      * @throws SQLException Si hay problemas con la base de datos.
      */
+    @Override
     public ArrayList<Matricula> get() throws OperationNotSupportedException, SQLException {
         ArrayList<Matricula> copiaMatriculas = new ArrayList<>();
         String query = """
-    			SELECT m.idMatricula,
-				    m.cursoAcademico,
-				    m.fechaMatriculacion,
-				    m.fechaAnulacion,
-				    m.dni
-				FROM matricula m
-				LEFT JOIN alumno a ON m.dni = a.dni
-				ORDER BY m.fechaMatriculacion DESC, a.nombre
-    			""";
+        SELECT m.idMatricula,
+               m.cursoAcademico,
+               m.fechaMatriculacion,
+               m.fechaAnulacion,
+               m.dni
+        FROM matricula m
+        LEFT JOIN alumno a ON m.dni = a.dni
+        ORDER BY m.fechaMatriculacion DESC, a.nombre
+        """;
+
         Statement sentencia = conexion.createStatement();
         ResultSet rs = sentencia.executeQuery(query);
+
         while (rs.next()) {
-            Alumno alumno = Alumnos.getInstancia().buscar(new Alumno("ficticio", rs.getString("dni"), "ficticio@gmail.com", "627673847", LocalDate.of(2000, 1, 1)));
-
-            // Crear la matrícula sin usar el setter de la fecha (para mostrar matrículas con fecha anterior a 15 días de la actual)
-            LocalDate fechaMatriculacion = rs.getDate("fechaMatriculacion").toLocalDate();
-
-            // Capturar posibles excepciones que puedan surgir si la fecha no es válida
             try {
-                // Asignar la fecha directamente a la matrícula
+                Alumno alumno = Alumnos.getInstancia().buscar(
+                        new Alumno("ficticio", rs.getString("dni"), "ficticio@gmail.com", "627673847", LocalDate.of(2000, 1, 1))
+                );
+
+                ArrayList<Asignatura> asignaturas = getAsignaturasMatricula(rs.getInt("idMatricula"));
+
+                // Crear matrícula con fecha actual (válida)
                 Matricula matricula = new Matricula(
                         rs.getInt("idMatricula"),
                         rs.getString("cursoAcademico"),
-                        fechaMatriculacion,  // Asignar la fecha directamente sin usar el setter
+                        LocalDate.now(), // Temporal para evitar excepción
                         alumno,
-                        getAsignaturasMatricula(rs.getInt("idMatricula"))
+                        asignaturas
                 );
-                // Verificar si existe una fecha de anulación
+
+                // Luego modificar la fecha real mediante reflexión
+                Field fFechaMat = Matricula.class.getDeclaredField("fechaMatriculacion");
+                fFechaMat.setAccessible(true);
+                fFechaMat.set(matricula, rs.getDate("fechaMatriculacion").toLocalDate());
+
                 if (rs.getDate("fechaAnulacion") != null) {
-                    matricula.setFechaAnulacion(rs.getDate("fechaAnulacion").toLocalDate());
+                    Field fFechaAnulacion = Matricula.class.getDeclaredField("fechaAnulacion");
+                    fFechaAnulacion.setAccessible(true);
+                    fFechaAnulacion.set(matricula, rs.getDate("fechaAnulacion").toLocalDate());
                 }
-                // Añadir la matrícula a la lista
                 copiaMatriculas.add(matricula);
-            } catch (IllegalArgumentException e) {
-                // Capturar la excepción de los 15 días si se lanza
+
+            } catch (Exception e) {
+                System.err.println("No se pudo cargar una matrícula: " + e.getMessage());
             }
         }
         return copiaMatriculas;
     }
+
 
     /**
      * Obtiene las asignaturas de una matrícula.
@@ -250,11 +263,21 @@ public class Matriculas implements IMatriculas {
             Alumno alumno = Alumnos.getInstancia().buscar(new Alumno("ficticio", rs.getString("dni"), "ficticio@fake.com", "666554433", LocalDate.of(2000, 1, 1)));
             Matricula matriculaEncontrada = new Matricula(rs.getInt("idMatricula"),
                     rs.getString("cursoAcademico"),
-                    rs.getDate("fechaMatriculacion").toLocalDate(),
+                    LocalDate.now(),
                     alumno,
                     getAsignaturasMatricula(rs.getInt("idMatricula")));
-            if (rs.getDate("fechaAnulacion") != null) {
-                matriculaEncontrada.setFechaAnulacion(rs.getDate("fechaAnulacion").toLocalDate());
+            try {
+                Field fFechaMat = Matricula.class.getDeclaredField("fechaMatriculacion");
+                fFechaMat.setAccessible(true);
+                fFechaMat.set(matricula, rs.getDate("fechaMatriculacion").toLocalDate());
+
+                if (rs.getDate("fechaAnulacion") != null) {
+                    Field fFechaAnulacion = Matricula.class.getDeclaredField("fechaAnulacion");
+                    fFechaAnulacion.setAccessible(true);
+                    fFechaAnulacion.set(matricula, rs.getDate("fechaAnulacion").toLocalDate());
+                }
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                System.err.println("Error al asignar fechas por reflexión: " + e.getMessage());
             }
             return matriculaEncontrada;
         }
@@ -312,50 +335,50 @@ public class Matriculas implements IMatriculas {
     public ArrayList<Matricula> get(Alumno alumno) throws OperationNotSupportedException, SQLException {
         ArrayList<Matricula> copiaMatriculas = new ArrayList<>();
         String query = """
-    			SELECT m.idMatricula,
-				    m.cursoAcademico,
-				    m.fechaMatriculacion,
-				    m.fechaAnulacion,
-				    m.dni,
-                    a.nombre,
-                    a.telefono,
-                    a.correo,
-                    a.fechaNacimiento 
-				FROM matricula m
-				LEFT JOIN alumno a ON m.dni = a.dni
-				WHERE a.dni = ?
-				ORDER BY m.fechaMatriculacion DESC, a.nombre
-    			""";
+        SELECT m.idMatricula, m.cursoAcademico, m.fechaMatriculacion, m.fechaAnulacion,
+               m.dni, a.nombre, a.telefono, a.correo, a.fechaNacimiento 
+        FROM matricula m
+        LEFT JOIN alumno a ON m.dni = a.dni
+        WHERE a.dni = ?
+        ORDER BY m.fechaMatriculacion DESC, a.nombre
+    """;
         PreparedStatement pstmt = conexion.prepareStatement(query);
         pstmt.setString(1, alumno.getDni());
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            Alumno a = new Alumno(rs.getString("nombre"), rs.getString("dni"), rs.getString("correo"), rs.getString("telefono"), rs.getDate("fechaNacimiento").toLocalDate());
-            // Obtener la fecha de matriculación
-            LocalDate fechaMatriculacion = rs.getDate("fechaMatriculacion").toLocalDate();
 
-            // Intentar crear la matrícula, manejando posibles excepciones
+        while (rs.next()) {
             try {
-                // Crear el objeto Matricula a partir de la información recuperada
+                Alumno a = new Alumno(rs.getString("nombre"), rs.getString("dni"),
+                        rs.getString("correo"), rs.getString("telefono"),
+                        rs.getDate("fechaNacimiento").toLocalDate());
+
                 Matricula matricula = new Matricula(
                         rs.getInt("idMatricula"),
                         rs.getString("cursoAcademico"),
-                        fechaMatriculacion,  // Asignar directamente la fecha sin validación
-                        a,  // Se pasa el objeto Alumno
+                        LocalDate.now(),
+                        a,
                         getAsignaturasMatricula(rs.getInt("idMatricula"))
                 );
-                // Si existe una fecha de anulación, se asigna
+
+                // REFLEXIÓN para fijar fechas reales
+                Field fMat = Matricula.class.getDeclaredField("fechaMatriculacion");
+                fMat.setAccessible(true);
+                fMat.set(matricula, rs.getDate("fechaMatriculacion").toLocalDate());
+
                 if (rs.getDate("fechaAnulacion") != null) {
-                    matricula.setFechaAnulacion(rs.getDate("fechaAnulacion").toLocalDate());
+                    Field fAnu = Matricula.class.getDeclaredField("fechaAnulacion");
+                    fAnu.setAccessible(true);
+                    fAnu.set(matricula, rs.getDate("fechaAnulacion").toLocalDate());
                 }
-                // Añadir la matrícula a la lista
+
                 copiaMatriculas.add(matricula);
-            } catch (IllegalArgumentException e) {
-                // Capturar la excepción de los 15 días si se lanza, no hacer nada
+            } catch (Exception e) {
+                System.err.println("No se pudo cargar una matrícula: " + e.getMessage());
             }
         }
         return copiaMatriculas;
     }
+
 
     /**
      * Obtiene las matrículas asociadas a un curso académico específico.
@@ -368,50 +391,49 @@ public class Matriculas implements IMatriculas {
     public ArrayList<Matricula> get(String cursoAcademico) throws OperationNotSupportedException, SQLException {
         ArrayList<Matricula> copiaMatriculas = new ArrayList<>();
         String query = """
-    			SELECT m.idMatricula,
-				    m.cursoAcademico,
-				    m.fechaMatriculacion,
-				    m.fechaAnulacion,
-				    m.dni,
-                    a.nombre,
-                    a.telefono,
-                    a.correo,
-                    a.fechaNacimiento 
-				FROM matricula m
-				LEFT JOIN alumno a ON m.dni = a.dni
-				WHERE m.cursoAcademico = ?
-				ORDER BY m.fechaMatriculacion DESC, a.nombre
-    			""";
+        SELECT m.idMatricula, m.cursoAcademico, m.fechaMatriculacion, m.fechaAnulacion,
+               m.dni, a.nombre, a.telefono, a.correo, a.fechaNacimiento 
+        FROM matricula m
+        LEFT JOIN alumno a ON m.dni = a.dni
+        WHERE m.cursoAcademico = ?
+        ORDER BY m.fechaMatriculacion DESC, a.nombre
+    """;
         PreparedStatement pstmt = conexion.prepareStatement(query);
         pstmt.setString(1, cursoAcademico);
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            Alumno a = new Alumno(rs.getString("nombre"), rs.getString("dni"), rs.getString("correo"), rs.getString("telefono"), rs.getDate("fechaNacimiento").toLocalDate());
-            // Obtener la fecha de matriculación
-            LocalDate fechaMatriculacion = rs.getDate("fechaMatriculacion").toLocalDate();
 
-            // Intentar crear la matrícula, manejando posibles excepciones
+        while (rs.next()) {
             try {
-                // Crear el objeto Matricula a partir de la información recuperada
+                Alumno a = new Alumno(rs.getString("nombre"), rs.getString("dni"),
+                        rs.getString("correo"), rs.getString("telefono"),
+                        rs.getDate("fechaNacimiento").toLocalDate());
+
                 Matricula matricula = new Matricula(
                         rs.getInt("idMatricula"),
                         rs.getString("cursoAcademico"),
-                        fechaMatriculacion,  // Asignar directamente la fecha sin validación
-                        a,  // Se asigna el objeto Alumno
+                        LocalDate.now(),
+                        a,
                         getAsignaturasMatricula(rs.getInt("idMatricula"))
                 );
-                // Si existe una fecha de anulación, se asigna
+
+                Field fMat = Matricula.class.getDeclaredField("fechaMatriculacion");
+                fMat.setAccessible(true);
+                fMat.set(matricula, rs.getDate("fechaMatriculacion").toLocalDate());
+
                 if (rs.getDate("fechaAnulacion") != null) {
-                    matricula.setFechaAnulacion(rs.getDate("fechaAnulacion").toLocalDate());
+                    Field fAnu = Matricula.class.getDeclaredField("fechaAnulacion");
+                    fAnu.setAccessible(true);
+                    fAnu.set(matricula, rs.getDate("fechaAnulacion").toLocalDate());
                 }
-                // Añadir la matrícula a la lista
+
                 copiaMatriculas.add(matricula);
-            } catch (IllegalArgumentException e) {
-                // Capturar la excepción de los 15 días si se lanza, no hacer nada
+            } catch (Exception e) {
+                System.err.println("No se pudo cargar una matrícula: " + e.getMessage());
             }
         }
         return copiaMatriculas;
     }
+
 
     /**
      * Obtiene las matrículas asociadas a un ciclo formativo específico.
@@ -424,49 +446,45 @@ public class Matriculas implements IMatriculas {
     public ArrayList<Matricula> get(CicloFormativo cicloFormativo) throws OperationNotSupportedException, SQLException {
         ArrayList<Matricula> copiaMatriculas = new ArrayList<>();
         String query = """
-    			SELECT m.idMatricula,
-					m.cursoAcademico,
-					m.fechaMatriculacion,
-					m.fechaAnulacion,
-					m.dni,
-                    al.nombre,
-                    al.telefono,
-                    al.correo,
-                    al.fechaNacimiento 
-				FROM matricula m
-				LEFT JOIN asignaturasMatricula am ON m.idMatricula = am.idMatricula
-				LEFT JOIN asignatura a ON am.codigo = a.codigo
-				LEFT JOIN alumno al ON m.dni = al.dni                
-				WHERE a.codigoCicloFormativo = ?
-                GROUP BY m.idMatricula
-				ORDER BY m.fechaMatriculacion DESC, al.nombre
-    			""";
+        SELECT m.idMatricula, m.cursoAcademico, m.fechaMatriculacion, m.fechaAnulacion,
+               m.dni, al.nombre, al.telefono, al.correo, al.fechaNacimiento 
+        FROM matricula m
+        LEFT JOIN asignaturasMatricula am ON m.idMatricula = am.idMatricula
+        LEFT JOIN asignatura a ON am.codigo = a.codigo
+        LEFT JOIN alumno al ON m.dni = al.dni
+        WHERE a.codigoCicloFormativo = ?
+        GROUP BY m.idMatricula
+        ORDER BY m.fechaMatriculacion DESC, al.nombre
+    """;
         PreparedStatement pstmt = conexion.prepareStatement(query);
         pstmt.setInt(1, cicloFormativo.getCodigo());
         ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            Alumno al = new Alumno(rs.getString("nombre"), rs.getString("dni"), rs.getString("correo"), rs.getString("telefono"), rs.getDate("fechaNacimiento").toLocalDate());
-            // Obtener la fecha de matriculación
-            LocalDate fechaMatriculacion = rs.getDate("fechaMatriculacion").toLocalDate();
 
-            // Intentar crear la matrícula, manejando posibles excepciones
+        while (rs.next()) {
             try {
-                // Crear el objeto Matricula a partir de la información recuperada
+                Alumno al = new Alumno(rs.getString("nombre"), rs.getString("dni"),
+                        rs.getString("correo"), rs.getString("telefono"),
+                        rs.getDate("fechaNacimiento").toLocalDate());
+
                 Matricula matricula = new Matricula(
                         rs.getInt("idMatricula"),
                         rs.getString("cursoAcademico"),
-                        fechaMatriculacion,  // Asignar directamente la fecha sin validación
-                        al,  // Se asigna el objeto Alumno
+                        LocalDate.now(),
+                        al,
                         getAsignaturasMatricula(rs.getInt("idMatricula"))
                 );
-                // Si existe una fecha de anulación, se asigna
+                Field fMat = Matricula.class.getDeclaredField("fechaMatriculacion");
+                fMat.setAccessible(true);
+                fMat.set(matricula, rs.getDate("fechaMatriculacion").toLocalDate());
+
                 if (rs.getDate("fechaAnulacion") != null) {
-                    matricula.setFechaAnulacion(rs.getDate("fechaAnulacion").toLocalDate());
+                    Field fAnu = Matricula.class.getDeclaredField("fechaAnulacion");
+                    fAnu.setAccessible(true);
+                    fAnu.set(matricula, rs.getDate("fechaAnulacion").toLocalDate());
                 }
-                // Añadir la matrícula a la lista
                 copiaMatriculas.add(matricula);
-            } catch (IllegalArgumentException e) {
-                // Capturar la excepción de los 15 días si se lanza, no hacer nada
+            } catch (Exception e) {
+                System.err.println("No se pudo cargar una matrícula: " + e.getMessage());
             }
         }
         return copiaMatriculas;

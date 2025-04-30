@@ -1,4 +1,4 @@
-package org.iesalandalus.programacion.matriculacion.vista;
+package org.iesalandalus.programacion.matriculacion.vista.texto;
 
 /**
  * Enumeración Opcion que representa las diferentes opciones disponibles en el menú de la aplicación.
@@ -11,7 +11,7 @@ public enum Opcion {
         @Override
         public void ejecutar() {
             System.out.println("Salir");
-            vista.terminar();
+            vistaTexto.terminar();
         }
     },
     INSERTAR_ALUMNO("Insertar alumno") {
@@ -20,7 +20,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Insertar alumno");
             System.out.println("------------------------");
-            vista.insertarAlumno();
+            vistaTexto.insertarAlumno();
         }
     },
     BUSCAR_ALUMNO("Buscar alumno") {
@@ -29,7 +29,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Buscar alumno");
             System.out.println("------------------------");
-            vista.buscarAlumno();
+            vistaTexto.buscarAlumno();
         }
     },
     BORRAR_ALUMNO("Borrar alumno") {
@@ -38,7 +38,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Borrar alumno");
             System.out.println("------------------------");
-            vista.borrarAlumno();
+            vistaTexto.borrarAlumno();
         }
     },
     MOSTRAR_ALUMNOS("Mostrar alumnos") {
@@ -47,7 +47,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Mostrar alumno");
             System.out.println("------------------------");
-            vista.mostrarAlumnos();
+            vistaTexto.mostrarAlumnos();
         }
     },
     INSERTAR_CICLO_FORMATIVO("Insertar ciclo formativo") {
@@ -56,7 +56,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Insertar ciclo formativo");
             System.out.println("------------------------");
-            vista.insertarCicloFormativo();
+            vistaTexto.insertarCicloFormativo();
         }
     },
     BUSCAR_CICLO_FORMATIVO("Buscar ciclo formativo") {
@@ -65,7 +65,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Buscar ciclo formativo");
             System.out.println("------------------------");
-            vista.buscarCicloFormativo();
+            vistaTexto.buscarCicloFormativo();
         }
     },
     BORRAR_CICLO_FORMATIVO("Borrar ciclo formativo") {
@@ -74,7 +74,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Borrar ciclo formativo");
             System.out.println("------------------------");
-            vista.borrarCicloFormativo();
+            vistaTexto.borrarCicloFormativo();
         }
     },
     MOSTRAR_CICLOS_FORMATIVOS("Mostrar ciclos formativos") {
@@ -83,7 +83,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Mostrar ciclo formativo");
             System.out.println("------------------------");
-            vista.mostrarCiclosFormativos();
+            vistaTexto.mostrarCiclosFormativos();
         }
     },
     INSERTAR_ASIGNATURA("Insertar asignatura") {
@@ -92,7 +92,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Insertar asignatura");
             System.out.println("------------------------");
-            vista.insertarAsignatura();
+            vistaTexto.insertarAsignatura();
         }
     },
     BUSCAR_ASIGNATURA("Buscar asignatura") {
@@ -101,7 +101,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Buscar asignatura");
             System.out.println("------------------------");
-            vista.buscarAsignatura();
+            vistaTexto.buscarAsignatura();
         }
     },
     BORRAR_ASIGNATURA("Borrar asignatura") {
@@ -110,7 +110,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Borrar asignatura");
             System.out.println("------------------------");
-            vista.borrarAsignatura();
+            vistaTexto.borrarAsignatura();
         }
     },
     MOSTRAR_ASIGNATURAS("Mostrar asignaturas") {
@@ -119,7 +119,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Mostrar asignaturas");
             System.out.println("------------------------");
-            vista.mostrarAsignaturas();
+            vistaTexto.mostrarAsignaturas();
         }
     },
     INSERTAR_MATRICULA("Insertar matrícula") {
@@ -128,7 +128,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Insertar matrícula");
             System.out.println("------------------------");
-            vista.insertarMatricula();
+            vistaTexto.insertarMatricula();
         }
     },
     BUSCAR_MATRICULA("Buscar matrícula") {
@@ -137,7 +137,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Buscar matrícula");
             System.out.println("------------------------");
-            vista.buscarMatricula();
+            vistaTexto.buscarMatricula();
         }
     },
     ANULAR_MATRICULA("Anular matrícula") {
@@ -146,7 +146,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Anular matrícula");
             System.out.println("------------------------");
-            vista.anularMatricula();
+            vistaTexto.anularMatricula();
         }
     },
     MOSTRAR_MATRICULAS("Mostrar matrículas") {
@@ -155,7 +155,7 @@ public enum Opcion {
             System.out.println("------------------------");
             System.out.println("Mostrar matrículas");
             System.out.println("------------------------");
-            vista.mostrarMatriculas();
+            vistaTexto.mostrarMatriculas();
         }
     },
     MOSTRAR_MATRICULAS_ALUMNO("Mostrar matrículas de un alumno") {
@@ -164,7 +164,7 @@ public enum Opcion {
             System.out.println("---------------------------------");
             System.out.println("Mostrar matrículas de un alumno");
             System.out.println("---------------------------------");
-            vista.mostrarMatriculasPorAlumno();
+            vistaTexto.mostrarMatriculasPorAlumno();
         }
     },
     MOSTRAR_MATRICULAS_CICLO_FORMATIVO("Mostrar matrículas de un ciclo formativo") {
@@ -173,7 +173,7 @@ public enum Opcion {
             System.out.println("------------------------------------------");
             System.out.println("Mostrar matrículas de un ciclo formativo");
             System.out.println("------------------------------------------");
-            vista.mostrarMatriculasPorCicloFormativo();
+            vistaTexto.mostrarMatriculasPorCicloFormativo();
         }
     },
     MOSTRAR_MATRICULAS_CURSO_ACADEMICO("Mostrar matrículas de un curso académico") {
@@ -182,7 +182,7 @@ public enum Opcion {
             System.out.println("------------------------------------------");
             System.out.println("Mostrar matrículas de un curso academico");
             System.out.println("------------------------------------------");
-            vista.mostrarMatriculasPorCursoAcademico();
+            vistaTexto.mostrarMatriculasPorCursoAcademico();
         }
     };
 
@@ -190,7 +190,7 @@ public enum Opcion {
     private final String mensajeAMostrar;
 
     // Instancia de la vista asociada a la opción.
-    private static Vista vista;
+    private static VistaTexto vistaTexto;
 
     /**
      * Constructor de la enumeración Opcion que asocia un mensaje a mostrar a cada opción.
@@ -208,10 +208,10 @@ public enum Opcion {
     /**
      * Método para establecer la vista que se usará en la ejecución de las opciones.
      *
-     * @param vista Instancia de la clase Vista.
+     * @param vistaTexto Instancia de la clase Vista.
      */
-    public static void setVista(Vista vista) {
-        Opcion.vista = vista;
+    public static void setVista(VistaTexto vistaTexto) {
+        Opcion.vistaTexto = vistaTexto;
     }
 
     /**

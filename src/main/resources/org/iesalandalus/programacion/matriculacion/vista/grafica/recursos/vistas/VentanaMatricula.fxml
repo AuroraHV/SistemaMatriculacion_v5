@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.matriculacion.vista.grafica.controladores.ControladorVentanaMatricula">
+
+    <stylesheets>
+        <URL value="@../estilos/estilos.css" />
+        <URL value="@../estilos/estilo_boton.css" />
+    </stylesheets>
+
+    <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
+
+        <!-- Título -->
+        <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Nueva Matrícula">
+         <padding>
+            <Insets bottom="-10.0" />
+         </padding></Label>
+
+        <Separator />
+
+        <!-- Formulario -->
+        <GridPane hgap="10" vgap="12">
+            <padding>
+                <Insets bottom="10" left="20" right="20" top="10" />
+            </padding>
+
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="130" />
+                <ColumnConstraints halignment="LEFT" minWidth="300" />
+            </columnConstraints>
+
+            <!-- Fila 0: DNI -->
+            <Label text="DNI del alumno:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="tfDniAlumno" promptText="Ej: 12345678A" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <!-- Fila 1: ID Matrícula -->
+            <Label text="ID Matrícula:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="tfIdMatricula" promptText="ID numérico único" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <!-- Fila 2: Buscar asignatura -->
+            <Label text="Buscar asignatura:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="tfBuscarAsignatura" promptText="Buscar por código o nombre" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <!-- Fila 3: Asignaturas registradas -->
+            <Label text="Asignaturas registradas:" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <ListView fx:id="lvAsignaturas" prefHeight="128.0" prefWidth="464.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+            <!-- Fila 4: Fecha de matrícula -->
+            <Label text="Fecha matriculación:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <DatePicker fx:id="dpFechaMatricula" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+            <!-- Fila 5: Fecha de anulación -->
+            <Label prefHeight="41.0" prefWidth="130.0" text="Fecha anulación (opcional):" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <DatePicker fx:id="dpFechaAnulacion" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+
+        <Separator />
+
+        <!-- Botones -->
+        <HBox alignment="CENTER" spacing="25">
+            <Button fx:id="btnAceptar" id="btAceptar" onAction="#registrarMatricula" styleClass="botones" text="Registrar" />
+            <Button fx:id="btnCancelar" id="btCancelar" onAction="#cancelar" styleClass="botones" text="Cancelar" />
+        </HBox>
+    </VBox>
+</AnchorPane>

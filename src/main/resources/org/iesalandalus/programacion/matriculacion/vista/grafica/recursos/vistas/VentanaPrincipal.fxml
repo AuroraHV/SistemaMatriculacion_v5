@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.matriculacion.vista.grafica.controladores.ControladorVentanaPrincipal">
+    <stylesheets>
+        <URL value="@../estilos/estilo_boton.css" />
+    </stylesheets>
+    <top>
+        <MenuBar style="-fx-font-size: 12px; -fx-background-color: #CFE2F3;">
+            <menus>
+                <Menu text="Archivo">
+                    <MenuItem onAction="#irInicio" text="Inicio" />
+               <MenuItem onAction="#irAlumnos" text="Alumnos" />
+               <MenuItem onAction="#irCiclos" text="Ciclos Formativos" />
+               <MenuItem onAction="#irAsignaturas" text="Asignaturas" />
+               <MenuItem onAction="#irMatriculas" text="Matrículas" />
+               <MenuItem onAction="#salir" text="Cerrar" />
+                </Menu>
+                <Menu text="Operaciones">
+                    <MenuItem onAction="#anadirElemento" text="Añadir" />
+               <MenuItem onAction="#eliminarElemento" text="Eliminar/Anular" />
+                </Menu>
+                <Menu text="Ayuda">
+                    <MenuItem onAction="#acercaDe" text="Acerca de" />
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+
+    <center>
+        <TabPane fx:id="tpSistema" tabClosingPolicy="UNAVAILABLE">
+            <Tab text="Inicio">
+                <HBox prefHeight="600.0" prefWidth="1000.0">
+                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <children>
+                            <ImageView fx:id="ivFondo" fitHeight="600.0" fitWidth="1059.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: transparent;">
+                                <image>
+                                    <Image url="@../imagenes/VentanaPrincipal.png" />
+                                </image>
+                            </ImageView>
+                            <VBox alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="398.0" spacing="10.0">
+                                <Label alignment="TOP_RIGHT" maxWidth="582.0" prefHeight="137.0" prefWidth="582.0" style="-fx-font-size: 45px; -fx-font-weight: bold; -fx-text-fill: #0A2A43;" text="Bienvenido/a al Sistema      de Matriculación" wrapText="true">
+                                    <VBox.margin>
+                                        <Insets bottom="20.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <ImageView fitHeight="152.0" fitWidth="158.0" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../imagenes/logo_ies_al_andalus.png" />
+                                    </image>
+                                    <VBox.margin>
+                                        <Insets bottom="60.0" left="50.0" />
+                                    </VBox.margin>
+                                </ImageView>
+                                <Button fx:id="btnEntrar" onAction="#entrarAlSistema" styleClass="boton-entrar" text="Entrar al sistema">
+                                    <VBox.margin>
+                                        <Insets left="70.0" top="-20.0" />
+                                    </VBox.margin>
+                                </Button>
+                                <StackPane.margin>
+                                    <Insets bottom="90.0" left="50.0" />
+                                </StackPane.margin>
+                            </VBox>
+                        </children>
+                    </StackPane>
+                </HBox>
+            </Tab>
+
+            <!-- TAB Alumnos -->
+            <Tab fx:id="tbAlumnos" text="Alumnos">
+                <AnchorPane fx:id="panelAlumnos" style="-fx-background-color: #FFFFFF;">
+                    <VBox layoutX="10" layoutY="10" spacing="10">
+                        <HBox spacing="10">
+                            <ImageView fitHeight="30" fitWidth="30" preserveRatio="true">
+                                <image>
+                                    <Image url="@../imagenes/alumno.png" />
+                                </image>
+                            </ImageView>
+                            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Alumnos" />
+                        </HBox>
+                        <HBox prefWidth="880" spacing="10">
+                            <HBox spacing="10">
+                                <TextField fx:id="tfBuscarAlumno" prefWidth="300" promptText="Buscar por nombre o DNI..." />
+                                <Button onAction="#ordenarAlumnosAscendente" styleClass="botones" text="↑">
+                                    <tooltip>
+                                        <Tooltip text="Ordenar ascendente" />
+                                    </tooltip>
+                                </Button>
+                                <Button onAction="#ordenarAlumnosDescendente" styleClass="botones" text="↓">
+                                    <tooltip>
+                                        <Tooltip text="Ordenar descendente" />
+                                    </tooltip>
+                                </Button>
+                                <Button onAction="#anadirAlumno" prefHeight="25.5" prefWidth="30" style="-fx-padding: 0; " styleClass="botones">
+                                    <graphic>
+                                        <ImageView fitHeight="25" fitWidth="23" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../imagenes/+.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Añadir alumno" />
+                                    </tooltip>
+                                </Button>
+                                <Button onAction="#eliminarAlumno" prefHeight="25.5" prefWidth="30" style="-fx-padding: 0;" styleClass="botones">
+                                    <graphic>
+                                        <ImageView fitHeight="25" fitWidth="23" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../imagenes/x.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Eliminar alumno" />
+                                    </tooltip>
+                                </Button>
+                            </HBox>
+                            <HBox alignment="CENTER_RIGHT">
+                                <Button onAction="#salir" prefHeight="25.5" prefWidth="30.0" style="-fx-background-color: transparent; -fx-padding: 0;" styleClass="boton-salir">
+                                    <graphic>
+                                        <ImageView fitHeight="23" fitWidth="23.0" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../imagenes/salir.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Salir de la aplicación" />
+                                    </tooltip>
+                                </Button>
+                        <opaqueInsets>
+                           <Insets />
+                        </opaqueInsets>
+                        <padding>
+                           <Insets left="395.0" />
+                        </padding>
+                            </HBox>
+                        </HBox>
+                        <TableView fx:id="tvAlumnos" prefHeight="200" prefWidth="880">
+                            <columns>
+                                <TableColumn fx:id="tcNombreAlumno" prefWidth="180" text="Nombre" />
+                                <TableColumn fx:id="tcDniAlumno" prefWidth="120" style="-fx-alignment: CENTER-RIGHT;" text="DNI" />
+                                <TableColumn fx:id="tcCorreoAlumno" prefWidth="189.0" text="Correo" />
+                                <TableColumn fx:id="tcTelefonoAlumno" prefWidth="121.0" style="-fx-alignment: CENTER-RIGHT;" text="Teléfono" />
+                                <TableColumn fx:id="tcNacimientoAlumno" prefWidth="163.5" style="-fx-alignment: CENTER-RIGHT;" text="Nacimiento" />
+                                <TableColumn fx:id="tcNiaAlumno" prefWidth="104.5" style="-fx-alignment: CENTER-RIGHT;" text="NIA" />
+                            </columns>
+                        </TableView>
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Matrícula asociada" />
+                        <TableView fx:id="tvMatriculaAlumno" prefHeight="200" prefWidth="880">
+                            <columns>
+                                <TableColumn fx:id="tcAlumnoMatriculaAs" prefWidth="188.0" text="Alumno" />
+                                <TableColumn fx:id="tcDNIMatriculaAs" prefWidth="117.5" style="-fx-alignment: CENTER-RIGHT;" text="DNI" />
+                                <TableColumn fx:id="tcIDMatriculaAs" prefWidth="108.5" style="-fx-alignment: CENTER-RIGHT;" text="ID Matrícula" />
+                                <TableColumn fx:id="tcAsignaturasMatriculaAs" prefWidth="135.0" text="Asignaturas" />
+                                <TableColumn fx:id="tcFechaMatriculaAs" prefWidth="176.5" style="-fx-alignment: CENTER-RIGHT;" text="Fecha Matriculación" />
+                                <TableColumn fx:id="tcAnulacionMatriculaAs" prefWidth="152.0" style="-fx-alignment: CENTER-RIGHT;" text="Fecha Anulación" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </AnchorPane>
+            </Tab>
+
+            <!-- TAB Ciclos Formativos -->
+            <Tab fx:id="tbCiclos" text="Ciclos Formativos">
+                <AnchorPane fx:id="panelCiclos" style="-fx-background-color: #FFFFFF;">
+                    <VBox layoutX="10" layoutY="10" spacing="10">
+                        <HBox spacing="10">
+                            <ImageView fitHeight="30" fitWidth="30" preserveRatio="true">
+                                <image>
+                                    <Image url="@../imagenes/ciclo.png" />
+                                </image>
+                            </ImageView>
+                            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Ciclos Formativos" />
+                        </HBox>
+                        <HBox spacing="10">
+                            <TextField fx:id="tfBuscarCiclo" prefWidth="300" promptText="Buscar por nombre o código..." />
+                            <Button onAction="#ordenarCiclosAscendente" styleClass="botones" text="↑">
+                        <tooltip>
+                           <Tooltip text="Ordenar descendente" />
+                        </tooltip></Button>
+                            <Button onAction="#ordenarCiclosDescendente" styleClass="botones" text="↓">
+                        <tooltip>
+                           <Tooltip text="Ordenar descendente" />
+                        </tooltip></Button>
+                            <Button onAction="#anadirCiclo" prefHeight="25.5" prefWidth="30" style="-fx-padding: 0;" styleClass="botones">
+                                <graphic>
+                                    <ImageView fitHeight="25" fitWidth="23" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../imagenes/+.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                                <tooltip>
+                                    <Tooltip text="Añadir ciclo" />
+                                </tooltip>
+                            </Button>
+                            <Button onAction="#eliminarCiclo" prefHeight="25.5" prefWidth="30" style="-fx-padding: 0;" styleClass="botones">
+                                <graphic>
+                                    <ImageView fitHeight="25" fitWidth="23" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../imagenes/x.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                                <tooltip>
+                                    <Tooltip text="Eliminar ciclo" />
+                                </tooltip>
+                            </Button>
+                            <HBox alignment="CENTER_RIGHT">
+                                <Button onAction="#salir" prefHeight="25.5" prefWidth="30.0" style="-fx-background-color: transparent; -fx-padding: 0;" styleClass="boton-salir">
+                                    <graphic>
+                                        <ImageView fitHeight="23" fitWidth="23.0" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../imagenes/salir.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Salir de la aplicación" />
+                                    </tooltip>
+                                </Button>
+                                <opaqueInsets>
+                                    <Insets />
+                                </opaqueInsets>
+                                <padding>
+                                    <Insets left="395.0" />
+                                </padding>
+                            </HBox>
+                        </HBox>
+                        <TableView fx:id="tvCiclos" prefHeight="200" prefWidth="880">
+                            <columns>
+                                <TableColumn fx:id="tcCodigoCiclo" prefWidth="67.5" style="-fx-alignment: CENTER-RIGHT;" text="Código" />
+                                <TableColumn fx:id="tcNombreCiclo" prefWidth="136.5" text="Nombre" />
+                                <TableColumn fx:id="tcFamiliaCiclo" prefWidth="154.0" text="Familia Profesional" />
+                                <TableColumn fx:id="tcHorasCiclo" prefWidth="58.0" style="-fx-alignment: CENTER-RIGHT;" text="Horas" />
+                                <TableColumn fx:id="tcTipoGradoCiclo" prefWidth="85.5" text="Tipo Grado" />
+                                <TableColumn fx:id="tcGradoCiclo" prefWidth="140.0" text="Grado" />
+                        <TableColumn fx:id="tcAnosCiclo" prefWidth="63.5" style="-fx-alignment: CENTER-RIGHT;" text="Nº Años" />
+                                <TableColumn fx:id="tcModalidadCiclo" prefWidth="90.0" text="Modalidad" />
+                        <TableColumn fx:id="tcEdicionesCiclo" prefWidth="82.0" style="-fx-alignment: CENTER-RIGHT;" text="Nº Ediciones" />
+                            </columns>
+                        </TableView>
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Matrícula asociada" />
+                        <TableView fx:id="tvMatriculaCiclo" prefHeight="200" prefWidth="880">
+                            <columns>
+                                <TableColumn fx:id="tcCicloMatriculaAsC" prefWidth="188.0" text="Ciclo Formativo" />
+                                <TableColumn fx:id="tcCodigoMatriculaAsC" prefWidth="117.5" style="-fx-alignment: CENTER-RIGHT;" text="Código Ciclo" />
+                                <TableColumn fx:id="tcIDMatriculaAsC" prefWidth="108.5" style="-fx-alignment: CENTER-RIGHT;" text="ID Matrícula" />
+                                <TableColumn fx:id="tcAsignaturasMatriculaAsC" prefWidth="135.0" text="Asignaturas" />
+                                <TableColumn fx:id="tcMatriculacionMatriculaAsC" prefWidth="176.5" style="-fx-alignment: CENTER-RIGHT;" text="Fecha Matriculación" />
+                                <TableColumn fx:id="tcAnulacionMatriculaC" prefWidth="152.5" style="-fx-alignment: CENTER-RIGHT;" text="Fecha Anulación" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </AnchorPane>
+            </Tab>
+
+            <!-- TAB Asignaturas -->
+            <Tab fx:id="tbAsignaturas" text="Asignaturas">
+                <AnchorPane fx:id="panelAsignaturas" style="-fx-background-color: #FFFFFF;">
+                    <VBox layoutX="10" layoutY="10" spacing="10">
+                        <HBox spacing="10">
+                            <ImageView fitHeight="30" fitWidth="30" preserveRatio="true">
+                                <image>
+                                    <Image url="@../imagenes/asignatura.png" />
+                                </image>
+                            </ImageView>
+                            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Asignaturas" />
+                        </HBox>
+                        <HBox spacing="10">
+                            <TextField fx:id="tfBuscarAsignatura" prefWidth="300" promptText="Buscar por nombre o código..." />
+                            <Button onAction="#ordenarAsignaturasAscendente" styleClass="botones" text="↑">
+                        <tooltip>
+                           <Tooltip text="Ordenar ascendente" />
+                        </tooltip></Button>
+                            <Button onAction="#ordenarAsignaturasDescendente" text="↓">
+                        <tooltip>
+                           <Tooltip text="Ordenar descendente" />
+                        </tooltip></Button>
+                            <Button onAction="#anadirAsignatura" prefHeight="25.5" prefWidth="30" style="-fx-padding: 0;" styleClass="botones">
+                                <graphic>
+                                    <ImageView fitHeight="25" fitWidth="23" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../imagenes/+.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                                <tooltip>
+                                    <Tooltip text="Añadir asignatura" />
+                                </tooltip>
+                            </Button>
+                            <Button onAction="#eliminarAsignatura" prefHeight="25.5" prefWidth="30" style="-fx-padding: 0;" styleClass="botones">
+                                <graphic>
+                                    <ImageView fitHeight="25" fitWidth="23" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../imagenes/x.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                                <tooltip>
+                                    <Tooltip text="Eliminar asignatura" />
+                                </tooltip>
+                            </Button>
+                            <HBox alignment="CENTER_RIGHT">
+                                <Button onAction="#salir" prefHeight="25.5" prefWidth="30.0" style="-fx-background-color: transparent; -fx-padding: 0;" styleClass="boton-salir">
+                                    <graphic>
+                                        <ImageView fitHeight="23" fitWidth="23.0" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../imagenes/salir.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Salir de la aplicación" />
+                                    </tooltip>
+                                </Button>
+                                <opaqueInsets>
+                                    <Insets />
+                                </opaqueInsets>
+                                <padding>
+                                    <Insets left="395.0" />
+                                </padding>
+                            </HBox>
+                        </HBox>
+                        <TableView fx:id="tvAsignaturas" prefHeight="200" prefWidth="880">
+                            <columns>
+                                <TableColumn fx:id="tcCodigoAsignatura" style="-fx-alignment: CENTER-RIGHT;" text="Código" />
+                                <TableColumn fx:id="tcNombreAsignatura" prefWidth="191.0" text="Nombre" />
+                                <TableColumn fx:id="tcCicloAsignatura" prefWidth="166.0" text="Ciclo Formativo" />
+                                <TableColumn fx:id="tcCursoAsignatura" prefWidth="132.5" text="Curso" />
+                                <TableColumn fx:id="tcEspecialidadAsignatura" prefWidth="145.5" text="Especialidad" />
+                                <TableColumn fx:id="tcHorasAsignatura" prefWidth="79.5" style="-fx-alignment: CENTER-RIGHT;" text="Horas" />
+                                <TableColumn fx:id="tcHorasDesdobleAsignatura" prefWidth="81.0" style="-fx-alignment: CENTER-RIGHT;" text="Desdoble" />
+                            </columns>
+                        </TableView>
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Ciclo formativo asociado" />
+                        <TableView fx:id="tvCicloAsignatura" prefHeight="200" prefWidth="880">
+                            <columns>
+                                <TableColumn fx:id="tcNombreAsignaturaCA" prefWidth="131.5" text="Asignatura" />
+                                <TableColumn fx:id="tcCodigoAsignaturaCA" prefWidth="54.0" style="-fx-alignment: CENTER-RIGHT;" text="Código" />
+                                <TableColumn fx:id="tcNombreCicloCA" prefWidth="83.5" text="Ciclo" />
+                                <TableColumn fx:id="tcCodigoCicloCA" prefWidth="77.5" style="-fx-alignment: CENTER-RIGHT;" text="Código Ciclo" />
+                                <TableColumn fx:id="tcFamiliaCicloCA" prefWidth="106.5" text="Familia Prof." />
+                                <TableColumn fx:id="tcHorasCicloCA" prefWidth="44.5" style="-fx-alignment: CENTER-RIGHT;" text="Horas" />
+                                <TableColumn fx:id="tcTipoGradoCicloCA" prefWidth="69.5" text="Tipo Grado" />
+                                <TableColumn fx:id="tcGradoCicloCA" prefWidth="109.5" text="Grado" />
+                                <TableColumn fx:id="tcAniosCicloCA" prefWidth="53.5" style="-fx-alignment: CENTER-RIGHT;" text="Nº Años" />
+                                <TableColumn fx:id="tcModalidadCicloCA" prefWidth="71.0" text="Modalidad" />
+                                <TableColumn fx:id="tcEdicionesCicloCA" prefWidth="76.5" style="-fx-alignment: CENTER-RIGHT;" text="Nº Ediciones" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </AnchorPane>
+            </Tab>
+
+
+            <!-- TAB Matrículas -->
+            <Tab fx:id="tbMatriculas" text="Matrículas">
+                <AnchorPane fx:id="panelMatriculas" style="-fx-background-color: #FFFFFF;">
+                    <VBox layoutX="10" layoutY="10" spacing="10">
+                        <HBox spacing="10">
+                            <ImageView fitHeight="30" fitWidth="30" preserveRatio="true">
+                                <image>
+                                    <Image url="@../imagenes/matricula.png" />
+                                </image>
+                            </ImageView>
+                            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Matrículas" />
+                        </HBox>
+                        <HBox spacing="10">
+                            <TextField fx:id="tfBuscarMatriculas" prefWidth="300" promptText="Buscar por alumno o ID..." />
+                            <Button onAction="#ordenarMatriculasAscendente" styleClass="botones" text="↑">
+                        <tooltip>
+                           <Tooltip text="Ordenar ascendente" />
+                        </tooltip></Button>
+                            <Button onAction="#ordenarMatriculasDescendente" styleClass="botones" text="↓">
+                        <tooltip>
+                           <Tooltip text="Ordenar descendente" />
+                        </tooltip></Button>
+                            <Button onAction="#registrarMatricula" prefHeight="25.5" prefWidth="30" style="-fx-padding: 0;" styleClass="botones">
+                                <graphic>
+                                    <ImageView fitHeight="25" fitWidth="23" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../imagenes/+.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                                <tooltip>
+                                    <Tooltip text="Nueva matrícula" />
+                                </tooltip>
+                            </Button>
+                            <Button onAction="#anularMatricula" prefHeight="25.5" prefWidth="30" style="-fx-padding: 0;" styleClass="botones">
+                                <graphic>
+                                    <ImageView fitHeight="25" fitWidth="23" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../imagenes/x.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                                <tooltip>
+                                    <Tooltip text="Anular matrícula" />
+                                </tooltip>
+                            </Button>
+                            <HBox alignment="CENTER_RIGHT">
+                                <Button onAction="#salir" prefHeight="25.5" prefWidth="30.0" style="-fx-background-color: transparent; -fx-padding: 0;" styleClass="boton-salir">
+                                    <graphic>
+                                        <ImageView fitHeight="23" fitWidth="23.0" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../imagenes/salir.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <tooltip>
+                                        <Tooltip text="Salir de la aplicación" />
+                                    </tooltip>
+                                </Button>
+                                <opaqueInsets>
+                                    <Insets />
+                                </opaqueInsets>
+                                <padding>
+                                    <Insets left="395.0" />
+                                </padding>
+                            </HBox>
+                        </HBox>
+                        <TableView fx:id="tvMatriculas" prefHeight="200" prefWidth="880">
+                            <columns>
+                                <TableColumn fx:id="tcIDMatricula" prefWidth="83.0" style="-fx-alignment: CENTER-RIGHT;" text="ID Matrícula" />
+                                <TableColumn fx:id="tcAlumnoMatricula" prefWidth="142.5" text="Alumno" />
+                                <TableColumn fx:id="tcDNIMatricula" prefWidth="98.5" style="-fx-alignment: CENTER-RIGHT;" text="DNI" />
+                                <TableColumn fx:id="tcCursoMatricula" prefWidth="112.5" style="-fx-alignment: CENTER-RIGHT;" text="Curso Académico" />
+                                <TableColumn fx:id="tcAsignaturasMatricula" prefWidth="219.0" text="Asignaturas" />
+                                <TableColumn fx:id="tcMatriculacionMatricula" prefWidth="124.5" style="-fx-alignment: CENTER-RIGHT;" text="Fecha Matriculación" />
+                                <TableColumn fx:id="tcAnulacionMatricula" prefWidth="97.5" style="-fx-alignment: CENTER-RIGHT;" text="Fecha Anulación" />
+                            </columns>
+                        </TableView>
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Curso académico y asignaturas asociadas" />
+                        <TableView fx:id="tvMatriculaCurso" prefHeight="200" prefWidth="880">
+                            <columns>
+                                <TableColumn fx:id="tcCursoMatriculaAsM" prefWidth="188.0" style="-fx-alignment: CENTER-RIGHT;" text="Curso Académico" />
+                                <TableColumn fx:id="tcIDMatriculaAsM" prefWidth="148.0" style="-fx-alignment: CENTER-RIGHT;" text="ID Matrícula" />
+                                <TableColumn fx:id="tcAsignaturasMatriculaAsM" prefWidth="214.0" text="Listado asignaturas" />
+                                <TableColumn fx:id="tcMatriculacionMatriculaAsM" prefWidth="170.5" style="-fx-alignment: CENTER-RIGHT;" text="Fecha Matriculación" />
+                                <TableColumn fx:id="tcAnulacionMatriculaAsM" prefWidth="157.0" style="-fx-alignment: CENTER-RIGHT;" text="Fecha Anulación" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </AnchorPane>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

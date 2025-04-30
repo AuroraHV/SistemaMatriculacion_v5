@@ -6,6 +6,7 @@ import org.iesalandalus.programacion.matriculacion.modelo.dominio.CicloFormativo
 import org.iesalandalus.programacion.matriculacion.modelo.dominio.Matricula;
 import org.iesalandalus.programacion.matriculacion.modelo.Modelo;
 import org.iesalandalus.programacion.matriculacion.vista.Vista;
+import org.iesalandalus.programacion.matriculacion.vista.texto.VistaTexto;
 
 import javax.naming.OperationNotSupportedException;
 import java.sql.SQLException;
@@ -52,12 +53,10 @@ public class Controlador {
     }
 
     /**
-     * Finaliza la ejecución de la aplicación, cerrando tanto el modelo como la vista.
+     * Finaliza la ejecución de la aplicación, cerrando el modelo.
      */
     public void terminar() {
         modelo.terminar();
-        vista.terminar();
-        System.out.println("La aplicación ha terminado.");
     }
 
     /**

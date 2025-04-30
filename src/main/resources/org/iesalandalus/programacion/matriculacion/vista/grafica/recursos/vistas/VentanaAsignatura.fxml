@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.matriculacion.vista.grafica.controladores.ControladorVentanaAsignatura">
+
+    <stylesheets>
+        <URL value="@../estilos/estilos.css" />
+        <URL value="@../estilos/estilo_boton.css" />
+    </stylesheets>
+
+    <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+
+        <!-- Título -->
+        <Label alignment="CENTER" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Añadir Asignatura">
+            <VBox.margin><Insets bottom="-10.0" /></VBox.margin>
+        </Label>
+        <Separator />
+
+        <!-- Formulario -->
+        <GridPane hgap="10" vgap="12">
+            <padding><Insets bottom="10" left="30" right="30" top="10" /></padding>
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="110.0" />
+                <ColumnConstraints halignment="LEFT" minWidth="340.0" />
+            </columnConstraints>
+
+            <!-- Fila 0 -->
+            <Label text="Código:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="tfCodigo" promptText="Debe ser de 4 dígitos" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <!-- Fila 1 -->
+            <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="tfNombre" promptText="Nombre de la asignatura" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <!-- Fila 2 -->
+            <Label text="Ciclo formativo:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <children>
+                    <TextField fx:id="tfBuscarCiclo" prefWidth="200.0" promptText="Buscar por código o nombre" />
+                    <ListView fx:id="lvCiclos" prefHeight="180.0" prefWidth="360.0" />
+                </children>
+            </VBox>
+
+            <!-- Fila 3 -->
+            <Label text="Curso:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <ComboBox fx:id="cbCurso" promptText="Seleccionar curso" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Primero" />
+                        <String fx:value="Segundo" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+
+            <!-- Fila 4 -->
+            <Label text="Especialidad:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <ComboBox fx:id="cbEspecialidad" promptText="Seleccionar especialidad" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Informática" />
+                        <String fx:value="Sistemas" />
+                        <String fx:value="FOL" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+
+            <!-- Fila 5 -->
+            <Label text="Horas anuales:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <TextField fx:id="tfHoras" promptText="Máx. 300 horas" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+            <!-- Fila 6 -->
+            <Label text="Horas desdoble:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+            <TextField fx:id="tfDesdoble" promptText="Máx. 6 horas" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+            <rowConstraints>
+                <RowConstraints /><RowConstraints /><RowConstraints />
+                <RowConstraints /><RowConstraints /><RowConstraints /><RowConstraints />
+            </rowConstraints>
+        </GridPane>
+
+        <Separator />
+
+        <!-- Botones -->
+        <HBox alignment="CENTER" spacing="25">
+            <Button fx:id="btnAceptar" id="btAceptar" onAction="#anadirAsignatura" styleClass="botones" text="Añadir" />
+            <Button fx:id="btnCancelar" id="btCancelar" onAction="#cancelar" styleClass="botones" text="Cancelar" />
+        </HBox>
+
+    </VBox>
+</AnchorPane>

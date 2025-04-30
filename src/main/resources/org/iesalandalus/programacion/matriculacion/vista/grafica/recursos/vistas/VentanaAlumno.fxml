@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="360.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.iesalandalus.programacion.matriculacion.vista.grafica.controladores.ControladorVentanaAlumno">
+
+    <stylesheets>
+        <URL value="@../estilos/estilos.css" />
+        <URL value="@../estilos/estilo_boton.css" />
+    </stylesheets>
+
+    <VBox alignment="CENTER" layoutX="-2.0" prefHeight="320.0" prefWidth="480.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="20.0">
+
+        <!-- Título -->
+        <Label alignment="CENTER" prefWidth="225.0" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Añadir nuevo alumno">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="-10.0" />
+         </padding></Label>
+      <Separator prefHeight="1.0" prefWidth="440.0" />
+
+        <!-- Formulario  -->
+        <GridPane hgap="10" vgap="12">
+            <padding><Insets bottom="10.0" left="35.0" right="10.0" top="10.0" /></padding>
+
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="100" />
+                <ColumnConstraints halignment="LEFT" minWidth="280" />
+            </columnConstraints>
+
+            <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="tfNombre" promptText="Nombre completo" styleClass="valido" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="DNI:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="tfDni" promptText="Ej: 12345678A" styleClass="valido" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Correo:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="tfCorreo" promptText="ejemplo@correo.com" styleClass="valido" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <TextField fx:id="tfTelefono" promptText="Ej: 600123456" styleClass="valido" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+            <Label text="Fecha Nacimiento" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <DatePicker fx:id="dpNacimiento" styleClass="valido" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+         <VBox.margin>
+            <Insets top="-10.0" />
+         </VBox.margin>
+        </GridPane>
+      <Separator layoutX="10.0" layoutY="68.0" prefHeight="1.0" prefWidth="440.0">
+         <padding>
+            <Insets top="-15.0" />
+         </padding>
+      </Separator>
+
+        <!-- Botones -->
+        <HBox alignment="CENTER" spacing="25">
+            <Button fx:id="btnAnadir" id="btAceptar" onAction="#anadirAlumno" styleClass="botones" prefWidth="112.0" text="Añadir"  />
+            <Button fx:id="btnCancelar" id="btCancelar" onAction="#cancelarAlumno" styleClass="botones" prefWidth="100.0" text="Cancelar" />
+         <padding>
+            <Insets top="-10.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+        </HBox>
+    </VBox>
+</AnchorPane>

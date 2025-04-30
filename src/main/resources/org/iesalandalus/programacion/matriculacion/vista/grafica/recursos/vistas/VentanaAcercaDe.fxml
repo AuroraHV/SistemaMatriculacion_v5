@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import java.net.URL?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="org.iesalandalus.programacion.matriculacion.vista.grafica.controladores.ControladorVentanaAcercaDe">
+    <VBox alignment="CENTER" prefHeight="300" prefWidth="400" spacing="10.0" style="-fx-background-color: #E6F0FA;">
+        <stylesheets>
+            <URL value="@../estilos/estilo_boton.css" />
+        </stylesheets>
+        <ImageView fitHeight="100" fitWidth="100">
+            <image>
+                <Image url="@../imagenes/logo_ies_al_andalus.png" />
+            </image>
+        </ImageView>
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Sistema de Matriculación 2024-2025" />
+        <Label text="DAW - Programación" />
+        <Label text="IES Al-Ándalus - Almería" />
+        <Label text="Versión 5.0" />
+        <Label text="© 2024-2025 Aurora Haro Vicente" />
+        <Button onAction="#cerrarVentana" text="Cerrar" styleClass="botones"  />
+    </VBox>
+</AnchorPane>

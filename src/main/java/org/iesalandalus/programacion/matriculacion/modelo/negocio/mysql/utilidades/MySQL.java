@@ -13,7 +13,11 @@ import java.sql.SQLException;
  */
 public class MySQL {
     // Constantes para la configuración de la base de datos.
-    private static final String HOST = "dbsistemamatriculacion.c38aw5xnhrps.us-east-1.rds.amazonaws.com";
+    private static final String HOST = "dbsistemamatriculacion.crwaeekcyj8s.us-east-1.rds.amazonaws.com";
+    //private static final String HOST = "dbsistemamatriculacion.c38aw5xnhrps.us-east-1.rds.amazonaws.com";
+    //private static final String HOST = "mysql.indalosoftware.com";
+    //private static final String USUARIO = "auri";
+    //private static final String CONTRASENA = "auri_daw_2425**..";
     private static final String ESQUEMA = "sistemamatriculacion";
     private static final String USUARIO = "sistemamatriculacion";
     private static final String CONTRASENA = "sistemamatriculacion-2025";

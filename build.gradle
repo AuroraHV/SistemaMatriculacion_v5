@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'org.example'
@@ -17,6 +19,14 @@ dependencies {
     // Entrada para que el repositorio jitpack.io sepa acceder a la localización de librería entrada
     implementation 'com.github.JRJimenezReyes:entrada:1.0.3'
     implementation 'mysql:mysql-connector-java:8.0.28'
+}
+
+javafx {
+    version = "21"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+application {
+    mainClass = 'org.iesalandalus.programacion.matriculacion.vista.grafica.LanzadorVentanaPrincipal'
 }
 
 test {
