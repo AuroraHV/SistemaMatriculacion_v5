@@ -195,6 +195,14 @@ public class ControladorVentanaPrincipal {
             }
         });
 
+        ContextMenu menu = new ContextMenu();
+        MenuItem anadirItem = new MenuItem("Añadir alumno");
+        anadirItem.setOnAction(e -> anadirAlumno(null));
+        MenuItem eliminarItem = new MenuItem("Eliminar alumno");
+        eliminarItem.setOnAction(e -> eliminarAlumno(null));
+        menu.getItems().addAll(anadirItem, eliminarItem);
+        tvAlumnos.setContextMenu(menu);
+
         //CICLOS
 
         tvCiclos.setPlaceholder(new Label("Cargando ciclos..."));
@@ -236,6 +244,14 @@ public class ControladorVentanaPrincipal {
             }
         });
 
+        ContextMenu menuCiclo = new ContextMenu();
+        MenuItem anadirCiclo = new MenuItem("Añadir ciclo");
+        anadirCiclo.setOnAction(e -> anadirCiclo(null));
+        MenuItem eliminarCiclo = new MenuItem("Eliminar ciclo");
+        eliminarCiclo.setOnAction(e -> eliminarCiclo(null));
+        menuCiclo.getItems().addAll(anadirCiclo, eliminarCiclo);
+        tvCiclos.setContextMenu(menuCiclo);
+
         // ASIGNATURAS
 
         tvAsignaturas.setPlaceholder(new Label("Cargando asignaturas..."));
@@ -274,6 +290,14 @@ public class ControladorVentanaPrincipal {
                 mostrarCicloAsignaturaSeleccionado(newVal);
             }
         });
+
+        ContextMenu menuAsignaturas = new ContextMenu();
+        MenuItem anadirAsig = new MenuItem("Añadir Asignatura");
+        anadirAsig.setOnAction(e -> anadirAsignatura(null));
+        MenuItem eliminarAsig = new MenuItem("Eliminar Asignatura");
+        eliminarAsig.setOnAction(e -> eliminarAsignatura(null));
+        menuAsignaturas.getItems().addAll(anadirAsig, eliminarAsig);
+        tvAsignaturas.setContextMenu(menuAsignaturas);
 
         // MATRÍCULAS
 
@@ -315,6 +339,13 @@ public class ControladorVentanaPrincipal {
             }
         });
 
+        ContextMenu menuMatriculas = new ContextMenu();
+        MenuItem registrarMat = new MenuItem("Registrar Matrícula");
+        registrarMat.setOnAction(e -> registrarMatricula(null));
+        MenuItem anularMat = new MenuItem("Anular Matrícula");
+        anularMat.setOnAction(e -> anularMatricula(null));
+        menuMatriculas.getItems().addAll(registrarMat, anularMat);
+        tvMatriculas.setContextMenu(menuMatriculas);
     }
 
     // BARRA MENÚ
